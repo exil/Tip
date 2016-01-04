@@ -16,13 +16,12 @@ class ViewController: UIViewController {
     @IBOutlet var tipControl: UISegmentedControl!
     @IBOutlet var tipSlider: UISlider!
     @IBOutlet var tipSliderLabel: UILabel!
+    @IBOutlet var totalView: UIView!
+    @IBOutlet var tipView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        tipLabel.text = "$0.00"
-        totalLabel.text = "$0.00"
-        
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: "applicationResigned", name: UIApplicationWillResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: "applicationBecameActive", name: UIApplicationDidBecomeActiveNotification, object: nil)
@@ -34,8 +33,6 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onEditingChanged(sender: AnyObject) {
-        /*var tipPercentages = [0.18, 0.2, 0.22]
-        var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]*/
         var tipPercentage = roundf(tipSlider.value)
         var billText = billField.text.stringByReplacingOccurrencesOfString("$", withString: "")
         
@@ -45,11 +42,26 @@ class ViewController: UIViewController {
         
         println("\(billField.text) \(tip) \(total)")
         
-        tipLabel.text = String(format: "$%.2f", tip)
-        totalLabel.text = String(format: "$%.2f", total)
+        tipLabel.text = String(format: "+ $%.2f", tip)
+        totalLabel.text = String(format: "= $%.2f", total)
         tipSliderLabel.text = "\(Int(tipPercentage))%"
     }
 
+    /*@IBAction func animateViews(sender: AnyObject) {
+        UIView.animateWithDuration(0.2, animations: {
+            var totalViewFrame = self.totalView.frame
+            var tipViewFrame = self.tipView.frame
+            
+            totalViewFrame.origin.y -= self.view.bounds.width
+            tipViewFrame.origin.y -= self.view.bounds.width
+            
+            self.totalView.frame = totalViewFrame
+            self.tipView.frame = tipViewFrame
+            }, completion: { finished in
+                
+        })
+    }*/
+    
     @IBAction func onTap(sender: AnyObject) {
         view.endEditing(true)
     }
@@ -83,6 +95,54 @@ class ViewController: UIViewController {
         if (count(billField.text) < 1) {
             billField.text = "$"
         }
+        
+        // if just $, reset to initial view
+        // once user has typed something, switch to full view
+        if (count(billField.text) == 1) {
+            resetPositions(true)
+        } else {
+            setPositions(true)
+        }
+    }
+    
+    /* move everything into place */
+    func setPositions(doAnimate: Bool) {
+        let animationDuration = doAnimate ? 0.2 : 0.0
+        let billFieldOrigin: CGFloat = 90
+        let totalViewOrigin: CGFloat = 233
+        let tipViewOrigin: CGFloat = 63
+        
+        // if amount view is already full height, just return
+        if (billField.frame.origin.y == billFieldOrigin) {
+            return;
+        }
+        
+        UIView.animateWithDuration(animationDuration, animations: {
+            println(self.totalView.frame.origin.y)
+            println(self.tipView.frame.origin.y)
+            self.totalView.frame.origin.y = totalViewOrigin
+            self.tipView.frame.origin.y = tipViewOrigin
+            
+            //self.amountView.frame.size.height = amountViewHeight
+            self.billField.frame.origin.y = billFieldOrigin
+        })
+    }
+    
+    func resetPositions(doAnimate: Bool) {
+        let animationDuration = doAnimate ? 0.2 : 0.0
+        // if frames are already out of view, just return
+        if (self.totalView.frame.origin.y > self.view.bounds.width) {
+            return;
+        }
+        
+        UIView.animateWithDuration(animationDuration, animations: {
+            println(self.totalView.frame.origin.y)
+            println(self.tipView.frame.origin.y)
+            self.totalView.frame.origin.y += self.view.bounds.height
+            self.tipView.frame.origin.y += self.view.bounds.height
+            self.billField.frame.origin.y = 293
+            println(self.billField.frame.origin.y)
+        })
     }
     
     func applicationResigned() {
@@ -119,8 +179,14 @@ class ViewController: UIViewController {
             }
         }
         
+        // don't do animations on first load
+        if (count(billField.text) == 1) {
+            resetPositions(false)
+        } else {
+            setPositions(false)
+        }
+        
         onEditingChanged(self)
     }
-
 }
 
