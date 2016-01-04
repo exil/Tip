@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet var billField: UITextField!
     @IBOutlet var totalLabel: UILabel!
     @IBOutlet var tipControl: UISegmentedControl!
+    @IBOutlet var tipSlider: UISlider!
+    @IBOutlet var tipSliderLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,17 +34,20 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onEditingChanged(sender: AnyObject) {
-        var tipPercentages = [0.18, 0.2, 0.22]
-        var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        /*var tipPercentages = [0.18, 0.2, 0.22]
+        var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]*/
+        var tipPercentage = roundf(tipSlider.value)
+        var billText = billField.text.stringByReplacingOccurrencesOfString("$", withString: "")
         
-        var billAmount = (billField.text as NSString).doubleValue
-        var tip = billAmount * tipPercentage
+        var billAmount = (billText as NSString).doubleValue
+        var tip = billAmount * Double(tipPercentage / 100)
         var total = billAmount + tip
+        
+        println("\(billField.text) \(tip) \(total)")
         
         tipLabel.text = String(format: "$%.2f", tip)
         totalLabel.text = String(format: "$%.2f", total)
-        
-        println("\(tipControl.selectedSegmentIndex)")
+        tipSliderLabel.text = "\(Int(tipPercentage))%"
     }
 
     @IBAction func onTap(sender: AnyObject) {
@@ -53,23 +58,42 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         var defaults = NSUserDefaults.standardUserDefaults()
-        var defaultTip = defaults.integerForKey("defaultTip")
+        var defaultTipValue = defaults.integerForKey("defaultTipValue")
+        var minimumTipValue = defaults.integerForKey("minimumTipValue")
+        var maximumTipValue = defaults.integerForKey("maximumTipValue")
         
-        tipControl.selectedSegmentIndex = defaultTip
+        tipSlider.minimumValue = Float(minimumTipValue)
+        tipSlider.maximumValue = Float(maximumTipValue)
+        tipSlider.value = Float(defaultTipValue)
+
+        tipSliderLabel.text = "\(defaultTipValue)"
+        
+        //tipControl.selectedSegmentIndex = defaultTip
         
         onEditingChanged(self)
         billField.becomeFirstResponder()
+    }
+    
+    @IBAction func sliderDoneMoving(sender: AnyObject) {
+        // make sure tip % is always an integer
+        //sender.setValue(Float(lroundf(tipSlider.value)), animated: true)
+    }
+    
+    @IBAction func billAmountChanged(sender: AnyObject) {
+        if (count(billField.text) < 1) {
+            billField.text = "$"
+        }
     }
     
     func applicationResigned() {
         // keep track of when app resigned
         var lastActiveDate = NSDate()
         // set values to remember bill state
-        var tipIndex = tipControl.selectedSegmentIndex
+        var tipPercentage = roundf(tipSlider.value)
         var billAmount = billField.text
         var defaults = NSUserDefaults.standardUserDefaults()
-        
-        defaults.setInteger(tipIndex, forKey: "tipIndex")
+
+        defaults.setFloat(tipPercentage, forKey: "tipPercentage")
         defaults.setValue(billAmount, forKey: "billAmount")
         defaults.setObject(lastActiveDate, forKey: "lastActiveDate")
         defaults.synchronize()
@@ -79,18 +103,18 @@ class ViewController: UIViewController {
         // get values to remember bill state
         var defaults = NSUserDefaults.standardUserDefaults()
         var billAmount = defaults.stringForKey("billAmount")
-        var tipIndex = defaults.integerForKey("tipIndex")
+        var tipPercentage = defaults.floatForKey("tipPercentage")
         var lastActiveDate: AnyObject? = defaults.objectForKey("lastActiveDate")
         let saveValueDuration = 600.0
         
-        if lastActiveDate != nil {
+        if (lastActiveDate != nil) {
             var secondsSinceLastActive = lastActiveDate!.timeIntervalSinceNow
 
             // if last accessed date is < 10 minutes, set form values
-            if secondsSinceLastActive * -1 < saveValueDuration {
+            if (secondsSinceLastActive * -1 < saveValueDuration) {
                 println(secondsSinceLastActive)
                 
-                tipControl.selectedSegmentIndex = tipIndex
+                tipSlider.value = tipPercentage
                 billField.text = billAmount
             }
         }

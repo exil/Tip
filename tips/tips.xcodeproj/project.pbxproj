@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50196B3C1C3A2209005044F3 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50196B3B1C3A2209005044F3 /* SettingsTableViewController.swift */; };
 		502991611C35878000BC07FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502991601C35878000BC07FA /* AppDelegate.swift */; };
 		502991631C35878000BC07FA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502991621C35878000BC07FA /* ViewController.swift */; };
 		502991661C35878000BC07FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 502991641C35878000BC07FA /* Main.storyboard */; };
 		502991681C35878100BC07FA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 502991671C35878100BC07FA /* Images.xcassets */; };
 		5029916B1C35878100BC07FA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502991691C35878100BC07FA /* LaunchScreen.xib */; };
 		502991771C35878100BC07FA /* tipsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502991761C35878100BC07FA /* tipsTests.swift */; };
-		502991821C37E56900BC07FA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502991811C37E56900BC07FA /* SettingsViewController.swift */; };
+		502991821C37E56900BC07FA /* SettingsViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502991811C37E56900BC07FA /* SettingsViewController2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		50196B3B1C3A2209005044F3 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		5029915B1C35878000BC07FA /* tips.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tips.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5029915F1C35878000BC07FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		502991601C35878000BC07FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -37,7 +39,7 @@
 		502991701C35878100BC07FA /* tipsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tipsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		502991751C35878100BC07FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		502991761C35878100BC07FA /* tipsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tipsTests.swift; sourceTree = "<group>"; };
-		502991811C37E56900BC07FA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		502991811C37E56900BC07FA /* SettingsViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,7 +120,8 @@
 		502991801C37E52B00BC07FA /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				502991811C37E56900BC07FA /* SettingsViewController.swift */,
+				50196B3B1C3A2209005044F3 /* SettingsTableViewController.swift */,
+				502991811C37E56900BC07FA /* SettingsViewController2.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -223,9 +226,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50196B3C1C3A2209005044F3 /* SettingsTableViewController.swift in Sources */,
 				502991631C35878000BC07FA /* ViewController.swift in Sources */,
 				502991611C35878000BC07FA /* AppDelegate.swift in Sources */,
-				502991821C37E56900BC07FA /* SettingsViewController.swift in Sources */,
+				502991821C37E56900BC07FA /* SettingsViewController2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
