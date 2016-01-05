@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet var tipLabel: UILabel!
 
-    @IBOutlet var totalLabel: UILabel!
+    @IBOutlet var totalLabel: UILabel!pr
     @IBOutlet var billField: UITextField!
     @IBOutlet var tipControl: UISegmentedControl!
     @IBOutlet var tipSlider: UISlider!
@@ -56,9 +56,6 @@ class ViewController: UIViewController {
         var billText = billField.text
         var billAmount = (billText as NSString).doubleValue
         
-        println(billText)
-        println(billField.frame.origin.y)
-        
         // format billText for regional purposes
         var billFormatted = NSNumberFormatter().numberFromString(billText)
         if let billFormatted = billFormatted {
@@ -67,9 +64,7 @@ class ViewController: UIViewController {
         
         var tip = billAmount * Double(tipPercentage / 100)
         var total = billAmount + tip
-        
-        println("\(billField.text) \(tip) \(total)")
-        
+
         formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
         formatter.locale = locale
         tipLabel.text = formatter.stringFromNumber(tip)
@@ -89,8 +84,6 @@ class ViewController: UIViewController {
         var defaultTipValue = defaults.integerForKey("defaultTipValue")
         var minimumTipValue = defaults.integerForKey("minimumTipValue")
         var maximumTipValue = defaults.integerForKey("maximumTipValue")
-        
-        println("\(defaultTipValue)")
         
         tipSlider.minimumValue = Float(minimumTipValue)
         tipSlider.maximumValue = Float(maximumTipValue)
@@ -186,8 +179,6 @@ class ViewController: UIViewController {
 
             // if last accessed date is < 10 minutes, set form values
             if (secondsSinceLastActive * -1 < saveValueDuration) {
-                println(secondsSinceLastActive)
-                
                 tipSlider.value = tipPercentage
                 billField.text = billAmount
             }
