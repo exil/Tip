@@ -13,6 +13,9 @@ Completed:
 * [x] Optional: Using locale-specific currency and currency thousands separators.
 * [x] Optional: Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
-![Video Walkthrough](name of your gif file.gif)
+![Video Walkthrough](tip.gif)
 
-Note: to embed the gif file, just check your gif file into your repo and update the name of the file above.
+Notes:
+
+- Changed Tip segmented control to a slider.
+- Added a minimum and maximum tip value to settings.
