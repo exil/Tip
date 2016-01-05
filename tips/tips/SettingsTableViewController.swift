@@ -42,9 +42,6 @@ class SettingsTableViewController: UITableViewController {
         minimumTip.text = "\(minimumTipValue)"
         maximumTip.text = "\(maximumTipValue)"
         defaultTip.text = "\(defaultTipValue)"
-        
-        println("loading \(defaultTip)")
-        //defaultTipControl.selectedSegmentIndex = defaultTip
     }
 
     // MARK: - Table view data source
