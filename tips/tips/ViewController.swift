@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet var tipLabel: UILabel!
 
-    @IBOutlet var totalLabel: UILabel!pr
+    @IBOutlet var totalLabel: UILabel!
     @IBOutlet var billField: UITextField!
     @IBOutlet var tipControl: UISegmentedControl!
     @IBOutlet var tipSlider: UISlider!
